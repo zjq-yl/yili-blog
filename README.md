@@ -11,7 +11,7 @@ npm install
 npm run build
 ```
 
-打开 `dist/index.html` 可以查看首页；部署后文章链接和样式会正常工作。新增文章时，在 `posts/` 新建 `.md` 文件，建议以 `YYYY-MM-DD-文章名.md` 命名。文章图片放在 `posts/images/`，在 Markdown 中使用相对路径 `images/图片名.png`。
+本地预览可在 `dist/` 目录运行 `python -m http.server 8000`，然后打开 `http://localhost:8000/`。新增文章时，在 `posts/` 新建 `.md` 文件，建议以 `YYYY-MM-DD-文章名.md` 命名。文章图片放在 `posts/images/`，在 Markdown 中使用相对路径 `images/图片名.png`。
 
 ## 部署到 Cloudflare Pages
 
