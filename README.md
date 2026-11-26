@@ -22,3 +22,5 @@ npm run build
 5. 在 Pages 项目的 **Custom domains** 中添加 `yiliz.site`。这是根域名，需要先把该域名添加到同一个 Cloudflare 账户，并按 Cloudflare 提示配置域名服务器。域名状态变为 Active 后，访问 `https://yiliz.site/` 验证。
 
 后续推送到生产分支会触发自动构建和部署。这里使用的是小型 Markdown 构建脚本，不需要安装 Hexo，因此 Cloudflare 的 Hexo 教程中 `public` 输出目录不适用于本仓库。
+
+如果在控制台创建的是 **Worker**（部署命令显示 `npx wrangler deploy`），仓库中的 `wrangler.jsonc` 已将静态资源目录指向 `dist/`。保留构建命令 `npm run build` 和部署命令 `npx wrangler deploy` 即可；部署后的临时地址通常是 `*.workers.dev`。域名请在 Worker 的 **Domains** 页面绑定。
