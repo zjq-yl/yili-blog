@@ -14,14 +14,14 @@ function layout(title, description, content) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
-  <title>${escapeHtml(title)} · 逸里</title>
+  <title>${escapeHtml(title)} · 艺黎</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="site-shell">
-    <header class="site-header"><a class="brand" href="/">逸里<span class="brand-dot">.</span></a><span class="header-note">写点日常，记点技术</span></header>
+    <header class="site-header"><a class="brand" href="/">艺黎<span class="brand-dot">.</span></a><span class="header-note">写点日常，记点技术</span></header>
     <main>${content}</main>
-    <footer class="site-footer">© ${new Date().getFullYear()} 逸里 · 记录学习与生活</footer>
+    <footer class="site-footer">© ${new Date().getFullYear()} 艺黎 · 记录学习与生活</footer>
   </div>
 </body>
 </html>`;
@@ -52,8 +52,8 @@ for (const file of files) {
 
 posts.sort((a, b) => b.date.localeCompare(a.date));
 const cards = posts.map((post) => `<article class="post-card"><time datetime="${post.date}">${post.date}</time><h2><a href="${post.url}">${escapeHtml(post.title)}</a></h2><p>${escapeHtml(post.excerpt)}</p><a class="read-link" href="${post.url}">阅读全文</a></article>`).join('\n');
-const home = `<section class="hero"><p class="eyebrow">PERSONAL BLOG</p><h1>你好，这里是逸里。</h1><p class="hero-copy">把学到的东西、遇到的问题和解决的过程，慢慢写下来。</p></section><section class="post-list"><div class="section-heading"><h2>文章</h2><span>${posts.length} 篇记录</span></div>${cards || '<p>第一篇文章正在路上。</p>'}</section>`;
-await writeFile(path.join(outDir, 'index.html'), layout('首页', '逸里的个人博客，记录学习与生活。', home));
+const home = `<section class="hero"><p class="eyebrow">PERSONAL BLOG</p><h1>你好，这里是艺黎。</h1><p class="hero-copy">把学到的东西、遇到的问题和解决的过程，慢慢写下来。</p></section><section class="post-list"><div class="section-heading"><h2>文章</h2><span>${posts.length} 篇记录</span></div>${cards || '<p>第一篇文章正在路上。</p>'}</section>`;
+await writeFile(path.join(outDir, 'index.html'), layout('首页', '艺黎的个人博客，记录学习与生活。', home));
 
 const imageDir = entries.find((entry) => entry.isDirectory() && entry.name === 'images');
 if (imageDir) {
