@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { postInfo } from '../lib/posts';
+
+const posts = (await getCollection('blog'))
+  .map(postInfo)
+  .sort((a, b) => b.date.localeCompare(a.date));
+---
+<BaseLayout title="博客文章" description="艺黎的个人博客，记录学习与生活。">
+  <div class="book-home">
+    <a class="book-back-home" href="/">← 返回首页</a>
+    <p class="desk-note">一本关于学习、尝试与日常的手稿</p>
+    <button class="book-cover" id="open-book" type="button" aria-controls="book-pages" aria-expanded="false">
+      <span class="cover-frame">
+        <span class="cover-kicker" lang="en">Yili's Journal</span>
+        <span class="cover-mark" aria-hidden="true">✳</span>
+        <span class="cover-title">艺黎<br />手记</span>
+        <span class="cover-rule" aria-hidden="true"></span>
+        <span class="cover-subtitle">把经过的日子，写成一页一页。</span>
+        <span class="cover-bottom">点击翻开这本书</span>
+      </span>
+    </button>
+
+    <section class="book-pages" id="book-pages" aria-label="艺黎手记内页" hidden>
+      <div class="book-page intro-page">
+        <div class="page-top"><span>艺黎手记</span><span>关于这本书</span></div>
+        <div class="intro-content">
+          <p class="page-kicker">序言</p>
+          <h1>你好，<br />这里是艺黎。</h1>
+          <div class="ink-rule" aria-hidden="true"></div>
+          <p>这里收着我写下的学习记录、动手实践和偶尔碰到的难题。</p>
+          <p>有些事情还没做完，也先记下来。等往后翻阅，也许能看见自己走过的路。</p>
+        </div>
+        <div class="page-bottom"><span>写点日常，记点技术</span><span>01</span></div>
+      </div>
+      <div class="book-page contents-page">
+        <div class="page-top"><span lang="en">Table of Contents</span><button class="close-book" id="close-book" type="button">合上书</button></div>
+        <div class="contents-content">
+          <p class="page-kicker">目录</p>
+          <h2>从这里开始读</h2>
+          <p class="contents-lead">目前收录 {posts.length} 篇文章。选一篇，翻到正文。</p>
+          <nav aria-label="文章目录">
+            {posts.map((post) => (
+              <a class="contents-item" href={post.url}>
+                <time datetime={post.date}>{post.date}</time>
+                <span class="contents-title">{post.title}</span>
+                <span class="contents-excerpt">{post.excerpt}</span>
+                <span class="contents-read">阅读文章 <span aria-hidden="true">↗</span></span>
+              </a>
+            ))}
+          </nav>
+        </div>
+        <div class="page-bottom"><span>慢慢写，慢慢读</span><span>02</span></div>
+      </div>
+    </section>
+    <p class="desk-caption">艺黎 · 个人博客</p>
+  </div>
+</BaseLayout>
+
+<script>
+  const cover = document.querySelector<HTMLButtonElement>('#open-book');
+  const pages = document.querySelector<HTMLElement>('#book-pages');
+  const close = document.querySelector<HTMLButtonElement>('#close-book');
+
+  function setBookOpen(isOpen: boolean) {
+    if (!cover || !pages) return;
+    cover.hidden = isOpen;
+    pages.hidden = !isOpen;
+    cover.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) close?.focus();
+    else cover.focus();
+  }
+
+  cover?.addEventListener('click', () => setBookOpen(true));
+  close?.addEventListener('click', () => setBookOpen(false));
+  if (new URLSearchParams(window.location.search).has('open')) setBookOpen(true);
+</script>

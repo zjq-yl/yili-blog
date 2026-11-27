@@ -17,4 +17,4 @@ npm run build
 
 当前使用 Cloudflare Worker 项目 `yili-blog`，连接 GitHub 的 `main` 分支。保留构建命令 `npm run build`、部署命令 `npx wrangler deploy`。`wrangler.jsonc` 将静态资源目录指向 `dist/`。每次推送后，Cloudflare 会重新构建并发布；部署状态可在 Worker 的 **Deployments** 页面查看。自定义域名 `yiliz.site` 在 Worker 的 **Domains** 页面管理。
 
-Astro 的内容集合配置在 `src/content.config.ts`，网页模板在 `src/layouts/` 和 `src/pages/`。文章原有的 `/posts/文章名.html` 地址保持不变。
+Astro 的内容集合配置在 `src/content.config.ts`，网页模板在 `src/layouts/` 和 `src/pages/`。首页位于 `/`，项目页位于 `/projects/`，博客页位于 `/blog/`，文章位于 `/posts/文章名/`。旧文章地址通过 `public/_redirects` 跳转到新地址。
