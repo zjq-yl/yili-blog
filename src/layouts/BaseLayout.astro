@@ -16,14 +16,14 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <title>{title} · 艺黎</title>
   </head>
-  <body>
+  <body class={Astro.url.pathname === '/' ? 'home-page' : ''}>
     <div class="site-shell">
       <header class="site-header">
         <a class="brand" href="/">艺黎<span class="brand-dot">.</span></a>
         <span class="header-note">写点日常，记点技术</span>
       </header>
       <main><slot /></main>
-      <footer class="site-footer">© {new Date().getFullYear()} 艺黎 · 记录学习与生活</footer>
+      <footer class="site-footer">© {new Date().getFullYear()} 艺黎 · 一页一页，慢慢写</footer>
     </div>
   </body>
 </html>
