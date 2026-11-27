@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { postInfo } from '../lib/posts';
+
+const posts = (await getCollection('blog'))
+  .map(postInfo)
+  .sort((a, b) => b.date.localeCompare(a.date));
+---
+<BaseLayout title="首页" description="艺黎的个人博客，记录学习与生活。">
+  <section class="hero">
+    <p class="eyebrow">PERSONAL BLOG</p>
+    <h1>你好，这里是艺黎。</h1>
+    <p class="hero-copy">把学到的东西、遇到的问题和解决的过程，慢慢写下来。</p>
+  </section>
+  <section class="post-list">
+    <div class="section-heading"><h2>文章</h2><span>{posts.length} 篇记录</span></div>
+    {posts.map((post) => (
+      <article class="post-card">
+        <time datetime={post.date}>{post.date}</time>
+        <h2><a href={post.url}>{post.title}</a></h2>
+        <p>{post.excerpt}</p>
+        <a class="read-link" href={post.url}>阅读全文</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>

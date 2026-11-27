@@ -1,6 +1,6 @@
 # 艺黎博客
 
-一个极简的静态博客。文章写在 `posts/` 中，运行构建后生成可部署到 Cloudflare Pages 的 `dist/` 目录。
+一个用 Astro 生成的极简静态博客。文章仍写在 `posts/` 中，运行构建后生成可部署到 Cloudflare Worker 的 `dist/` 目录。
 
 ## 本地构建
 
@@ -11,16 +11,10 @@ npm install
 npm run build
 ```
 
-本地预览可在 `dist/` 目录运行 `python -m http.server 8000`，然后打开 `http://localhost:8000/`。新增文章时，在 `posts/` 新建 `.md` 文件，建议以 `YYYY-MM-DD-文章名.md` 命名。文章图片放在 `posts/images/`，在 Markdown 中使用相对路径 `images/图片名.png`。
+本地开发可运行 `npm run dev`，按终端给出的网址打开网站。新增文章时，在 `posts/` 新建 `.md` 文件，建议以 `YYYY-MM-DD-文章名.md` 命名。文章图片放在 `posts/images/`，在 Markdown 中使用相对路径 `images/图片名.png`。Astro 会在构建时处理文章和图片。
 
 ## 部署到 Cloudflare Pages
 
-1. 将本仓库推送到 GitHub。
-2. 在 Cloudflare 控制台进入 **Workers & Pages → Create application → Pages → Connect to Git**，选择本仓库。
-3. 生产分支选择 `main`，根目录保持仓库根目录，构建命令填写 `npm run build`，构建输出目录填写 `dist`。框架预设可选 `None`。
-4. 点击部署。成功后先访问 Cloudflare 提供的 `*.pages.dev` 地址，检查首页、文章页和图片。
-5. 在 Pages 项目的 **Custom domains** 中添加 `yiliz.site`。这是根域名，需要先把该域名添加到同一个 Cloudflare 账户，并按 Cloudflare 提示配置域名服务器。域名状态变为 Active 后，访问 `https://yiliz.site/` 验证。
+当前使用 Cloudflare Worker 项目 `yili-blog`，连接 GitHub 的 `main` 分支。保留构建命令 `npm run build`、部署命令 `npx wrangler deploy`。`wrangler.jsonc` 将静态资源目录指向 `dist/`。每次推送后，Cloudflare 会重新构建并发布；部署状态可在 Worker 的 **Deployments** 页面查看。自定义域名 `yiliz.site` 在 Worker 的 **Domains** 页面管理。
 
-后续推送到生产分支会触发自动构建和部署。这里使用的是小型 Markdown 构建脚本，不需要安装 Hexo，因此 Cloudflare 的 Hexo 教程中 `public` 输出目录不适用于本仓库。
-
-如果在控制台创建的是 **Worker**（部署命令显示 `npx wrangler deploy`），仓库中的 `wrangler.jsonc` 已将静态资源目录指向 `dist/`。保留构建命令 `npm run build` 和部署命令 `npx wrangler deploy` 即可；部署后的临时地址通常是 `*.workers.dev`。域名请在 Worker 的 **Domains** 页面绑定。
+Astro 的内容集合配置在 `src/content.config.ts`，网页模板在 `src/layouts/` 和 `src/pages/`。文章原有的 `/posts/文章名.html` 地址保持不变。

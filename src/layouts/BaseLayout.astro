@@ -1,0 +1,29 @@
+---
+import '../../style.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title} · 艺黎</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">艺黎<span class="brand-dot">.</span></a>
+        <span class="header-note">写点日常，记点技术</span>
+      </header>
+      <main><slot /></main>
+      <footer class="site-footer">© {new Date().getFullYear()} 艺黎 · 记录学习与生活</footer>
+    </div>
+  </body>
+</html>
